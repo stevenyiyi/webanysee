@@ -1,0 +1,48 @@
+{
+  "name": "webanysee",
+  "version": "1.0.2",
+  "description": "web anysee player",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "@material-ui/core": "latest",
+    "@material-ui/icons": "latest",
+    "@material-ui/lab": "latest",
+    "aes-js": "latest",
+    "browser-cookies": "latest",
+    "hls.js": "latest",
+    "js-sha1": "latest",
+    "lodash": "latest",
+    "md5": "latest",
+    "mdi-material-ui": "latest",
+    "mobile-detect": "latest",
+    "react": "latest",
+    "react-app-polyfill": "latest",
+    "react-dom": "latest",
+    "react-scripts": "latest"
+  },
+  "devDependencies": {
+    "typescript": "latest"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "not ie < 11",
+      "ie 11"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version",
+      "ie 11"
+    ]
+  }
+}
