@@ -1,7 +1,7 @@
 {
   "name": "webanysee",
   "version": "1.0.2",
-  "description": "web anysee player",
+  "description": "",
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
