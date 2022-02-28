@@ -142,10 +142,16 @@ function parseXml(xml) {
   return flatten(data);
 }
 
-function genPlayUri(oid) {
-  let uri = "/live/" + oid + "_master.m3u8";
+/** 根据oid,domain产生播放地址 */
+const genPlayUri = (oid, domain) => {
+  let uri = "";
+  if (domain) {
+    uri = `https://${domain}/live/${oid}_master.m3u8`;
+  } else {
+    uri = `/live/${oid}_master.m3u8`;
+  }
   return uri;
-}
+};
 
 function randomString(length, chars) {
   var result = "";
@@ -165,12 +171,12 @@ function calcToken(username, password, path) {
 /** 给每一个camera 增加属性 'selected' 并返回默认选择播放的url及是否用主码流*/
 function fixCameraList(camlist) {
   // 预处理 camlist
-  let obj = {playuri:'',is_main_stream:true};
+  let obj = { playuri: "", is_main_stream: true };
   if (camlist.cameras) {
     let dcams = camlist.cameras.map((cam) => {
       if (cam.status === 1 && !obj.playuri) {
         cam["selected"] = true;
-        obj.playuri = genPlayUri(cam.oid);
+        obj.playuri = genPlayUri(cam.oid, cam.domain);
         obj.is_main_stream = cam.is_main_stream;
       } else {
         cam["selected"] = false;
@@ -184,7 +190,7 @@ function fixCameraList(camlist) {
       group.cameras.forEach((cam, index, theArray) => {
         if (cam.status === 1 && !obj.playuri) {
           theArray[index].selected = true;
-          obj.playuri = genPlayUri(cam.oid);
+          obj.playuri = genPlayUri(cam.oid, cam.domain);
           obj.is_main_stream = cam.is_main_stream;
         } else {
           theArray[index].selected = false;
