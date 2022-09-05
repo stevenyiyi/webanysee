@@ -41,22 +41,28 @@ export default function CameraPlayer(props) {
     const createMsePlayer = () => {
       let ohls = new Hls(hlsConfig);
       refHls.current = ohls;
-      refHls.current.loadSource(url);
-      refHls.current.attachMedia(refVideo.current);
       refHls.current.on(Hls.Events.MANIFEST_PARSED, () => {
-        if (autoplay) {
-          var playPromise = refVideo.current.play();
-          if (playPromise) {
-            playPromise.catch(function (error) {
+        let playAttempt = setInterval(() => {
+          refVideo.current
+            .play()
+            .then(() => {
+              clearInterval(playAttempt);
+              onSuccess && onSuccess(url);
+            })
+            .catch((error) => {
               if (error.name === "NotAllowedError") {
+                clearInterval(playAttempt);
                 refVideo.current.muted = true;
                 return refVideo.current.play();
+              } else {
+                console.log(
+                  "Unable to play the video, User has not interacted yet."
+                );
               }
             });
-          }
-          onSuccess && onSuccess(url);
-        }
+        }, 1000);
       });
+
       refHls.current.on(Hls.Events.ERROR, function (event, data) {
         if (data.fatal) {
           if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
@@ -72,6 +78,8 @@ export default function CameraPlayer(props) {
           }
         }
       });
+      refHls.current.loadSource(url);
+      refHls.current.attachMedia(refVideo.current);
     };
     const createHlsPlayer = () => {
       // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
