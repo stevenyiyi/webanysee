@@ -55,7 +55,12 @@ export default function CameraPlayer(props) {
       let ohls = new Hls(hlsConfig);
       refHls.current = ohls;
       refHls.current.on(Hls.Events.MANIFEST_PARSED, () => {
-        refVideo.current.play();
+        var playPromise = refVideo.current.play();
+        if (playPromise) {
+          playPromise.catch((error) => {
+            refVideo.current.pause();
+          });
+        }
       });
 
       refHls.current.on(Hls.Events.ERROR, function (event, data) {
@@ -141,8 +146,8 @@ export default function CameraPlayer(props) {
       crossOrigin="use-credentials"
       poster={poster}
       preload="auto"
-      autoPlay
-      muted
+      autoPlay="true"
+      muted="true"
       webkit-playsinline="true"
       playsInline
       x5-video-player-type="h5"
