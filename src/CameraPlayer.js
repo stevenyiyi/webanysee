@@ -43,7 +43,7 @@ export default function CameraPlayer(props) {
       refHls.current = ohls;
       refHls.current.loadSource(url);
       refHls.current.attachMedia(refVideo.current);
-      refHls.current.on(Hls.Events.MANIFEST_PARSED, () => {
+      refHls.current.on(Hls.Events.MEDIA_ATTACHED, () => {
         if (autoplay) {
           refVideo.current.muted = true;
           refVideo.current.play();
