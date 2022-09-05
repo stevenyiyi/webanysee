@@ -43,10 +43,17 @@ export default function CameraPlayer(props) {
       refHls.current = ohls;
       refHls.current.loadSource(url);
       refHls.current.attachMedia(refVideo.current);
-      refHls.current.on(Hls.Events.MEDIA_ATTACHED, () => {
+      refHls.current.on(Hls.Events.MANIFEST_PARSED, () => {
         if (autoplay) {
-          refVideo.current.muted = true;
-          refVideo.current.play();
+          var playPromise = refVideo.current.play();
+          if (playPromise) {
+            playPromise.catch(function (error) {
+              if (error.name === "NotAllowedError") {
+                refVideo.current.muted = true;
+                return refVideo.current.play();
+              }
+            });
+          }
           onSuccess && onSuccess(url);
         }
       });
