@@ -51,16 +51,20 @@ export default function CameraPlayer(props) {
       onSuccess && onSuccess(url);
     };
 
+    async function playVideo() {
+      try {
+        await refVideo.current.play();
+        onSuccess && onSuccess(url);
+      } catch (err) {
+        onError && onError(err);
+      }
+    }
+
     const createMsePlayer = () => {
       let ohls = new Hls(hlsConfig);
       refHls.current = ohls;
       refHls.current.on(Hls.Events.MANIFEST_PARSED, () => {
-        var playPromise = refVideo.current.play();
-        if (playPromise) {
-          playPromise.catch((error) => {
-            refVideo.current.pause();
-          });
-        }
+        playVideo();
       });
 
       refHls.current.on(Hls.Events.ERROR, function (event, data) {
