@@ -237,7 +237,7 @@ export default function QueryRecords(props) {
 QueryRecords.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  camera: PropTypes.object.isRequired,
+  camera: PropTypes.object,
   onPlayRecord: PropTypes.func.isRequired
 };
 

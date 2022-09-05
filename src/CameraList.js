@@ -257,7 +257,7 @@ export default function CameraList({ mobile, camlist, onRefreshData }) {
 
   /// NVR is active ?
   const isNVRAlive = (group) => {
-    if (browserCookie.get("role") === "7") {
+    if (browserCookie.get("role") !== "6") {
       return false;
     }
     if (group.gid.length !== 20 || group.gid.substr(10, 3) !== "111") {

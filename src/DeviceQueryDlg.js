@@ -86,7 +86,7 @@ export default function DeviceQueryDlg(props) {
 DeviceQueryDlg.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.object
 };
 
 DeviceQueryDlg.defaultProps = {

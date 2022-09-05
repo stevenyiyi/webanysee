@@ -5,7 +5,7 @@ import "regenerator-runtime/runtime";
 // IE11 needs "jsxRuntime classic" for this initial file which means that "React" needs to be in scope
 // issue: https://github.com/facebook/create-react-app/issues/9906
 import React from "react";
-import ReactDOM from "react-dom";
+import * as ReactDOMClient from "react-dom/client";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -109,6 +109,7 @@ App.propTypes = {
   let isMobile = md.mobile() ? true : false;
   let isIPhone = md.is("iPhone") && md.userAgent() === "Safari";
   console.log("mobile:" + isMobile + " iphone:" + isIPhone);
-  const rootNode = document.getElementById("root");
-  ReactDOM.render(<App mobile={isMobile} iphone={isIPhone} />, rootNode);
+  const container = document.getElementById("root");
+  const root = ReactDOMClient.createRoot(container);
+  root.render(<App mobile={isMobile} iphone={isIPhone} />);
 })();
