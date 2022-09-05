@@ -38,23 +38,29 @@ export default function CameraPlayer(props) {
   const refVideo = React.useRef();
 
   React.useEffect(() => {
+    refVideo.current.onerror = () => {
+      let err = refVideo.current.error;
+      refVideo.current.pause();
+      refVideo.current.src = "";
+      refVideo.current.removeAttribute("src"); // empty source
+      refVideo.current.load();
+      onError && onError(err);
+    };
+
     const createMsePlayer = () => {
       let ohls = new Hls(hlsConfig);
       refHls.current = ohls;
       refHls.current.on(Hls.Events.MANIFEST_PARSED, () => {
-        let playAttempt = setInterval(() => {
-          refVideo.current
-            .play()
-            .then(() => {
-              clearInterval(playAttempt);
-              onSuccess && onSuccess(url);
-            })
-            .catch((error) => {
-              console.log(
-                "Unable to play the video, User has not interacted yet."
-              );
-            });
-        }, 1000);
+        refVideo.current
+          .play()
+          .then(() => {
+            onSuccess && onSuccess(url);
+          })
+          .catch((error) => {
+            console.log(
+              "Unable to play the video, User has not interacted yet."
+            );
+          });
       });
 
       refHls.current.on(Hls.Events.ERROR, function (event, data) {
@@ -84,26 +90,14 @@ export default function CameraPlayer(props) {
       console.log("Browser not support mse, but can play m3u8!");
       refVideo.current.src = url;
       refVideo.current.load();
-      refVideo.current.addEventListener("canplaythrough", () => {
+      refVideo.current.oncanplaythrough = (event) => {
         if (autoplay) {
           refVideo.current.play();
         }
-      });
-      refVideo.current.addEventListener("play", () => {
+      };
+      refVideo.current.onplay = (event) => {
         onSuccess && onSuccess(url);
-      });
-      refVideo.current.addEventListener(
-        "error",
-        () => {
-          let err = refVideo.current.error;
-          refVideo.current.pause();
-          refVideo.current.src = "";
-          refVideo.current.removeAttribute("src"); // empty source
-          refVideo.current.load();
-          onError && onError(err);
-        },
-        true
-      );
+      };
     };
     console.log(
       `CameraPlayer useEffect,url:${url},refreshid:${refreshId},hls:${refHls.current},video:${refVideo.current}`
