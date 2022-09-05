@@ -47,20 +47,15 @@ export default function CameraPlayer(props) {
       onError && onError(err);
     };
 
+    refVideo.current.onplay = (event) => {
+      onSuccess && onSuccess(url);
+    };
+
     const createMsePlayer = () => {
       let ohls = new Hls(hlsConfig);
       refHls.current = ohls;
       refHls.current.on(Hls.Events.MANIFEST_PARSED, () => {
-        refVideo.current
-          .play()
-          .then(() => {
-            onSuccess && onSuccess(url);
-          })
-          .catch((error) => {
-            console.log(
-              "Unable to play the video, User has not interacted yet."
-            );
-          });
+        refVideo.current.play();
       });
 
       refHls.current.on(Hls.Events.ERROR, function (event, data) {
@@ -94,9 +89,6 @@ export default function CameraPlayer(props) {
         if (autoplay) {
           refVideo.current.play();
         }
-      };
-      refVideo.current.onplay = (event) => {
-        onSuccess && onSuccess(url);
       };
     };
     console.log(
