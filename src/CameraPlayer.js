@@ -47,16 +47,12 @@ export default function CameraPlayer(props) {
       onError && onError(err);
     };
 
-    refVideo.current.onplay = (event) => {
-      onSuccess && onSuccess(url);
-    };
-
     async function playVideo() {
       try {
         await refVideo.current.play();
         onSuccess && onSuccess(url);
       } catch (err) {
-        onError && onError(err);
+        console.log(err);
       }
     }
 
@@ -98,6 +94,9 @@ export default function CameraPlayer(props) {
         if (autoplay) {
           refVideo.current.play();
         }
+      };
+      refVideo.current.onplay = (event) => {
+        onSuccess && onSuccess(url);
       };
     };
     console.log(
