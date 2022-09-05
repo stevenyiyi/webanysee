@@ -142,6 +142,7 @@ export default function CameraPlayer(props) {
       poster={poster}
       preload="auto"
       autoPlay
+      muted
       webkit-playsinline="true"
       playsInline
       x5-video-player-type="h5"
