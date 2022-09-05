@@ -50,15 +50,9 @@ export default function CameraPlayer(props) {
               onSuccess && onSuccess(url);
             })
             .catch((error) => {
-              if (error.name === "NotAllowedError") {
-                clearInterval(playAttempt);
-                refVideo.current.muted = true;
-                return refVideo.current.play();
-              } else {
-                console.log(
-                  "Unable to play the video, User has not interacted yet."
-                );
-              }
+              console.log(
+                "Unable to play the video, User has not interacted yet."
+              );
             });
         }, 1000);
       });
