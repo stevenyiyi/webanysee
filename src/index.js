@@ -5,7 +5,7 @@ import "regenerator-runtime/runtime";
 // IE11 needs "jsxRuntime classic" for this initial file which means that "React" needs to be in scope
 // issue: https://github.com/facebook/create-react-app/issues/9906
 import React from "react";
-import ReactDOM from "react-dom";
+import * as ReactDOM from "react-dom/client";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import CssBaseline from "@material-ui/core/CssBaseline";
