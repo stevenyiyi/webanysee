@@ -146,7 +146,7 @@ function parseXml(xml) {
 const genPlayUri = (oid, domain) => {
   let uri = "";
   if (domain) {
-    uri = `http://${domain}/live/${oid}_master.m3u8`;
+    uri = `https://${domain}/live/${oid}_master.m3u8`;
   } else {
     uri = `/live/${oid}_master.m3u8`;
   }
