@@ -260,7 +260,7 @@ export default function CameraList({ mobile, camlist, onRefreshData }) {
     if (browserCookie.get("role") !== "6") {
       return false;
     }
-    if (group.gid.length !== 20 || group.gid.substr(10, 3) !== "111") {
+    if (group.gid.length !== 20 || (group.gid.substr(10, 3) !== "111" && group.gid.substr(10,3) !== "200")) {
       return false;
     }
     let f = false;
